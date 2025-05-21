@@ -1,69 +1,37 @@
-class Student{
-	private String name;
-	private int exam1;
-	private int exam2;
-	private int exam3;
-	
-	boolean validateMarks(int marks)throws Exception{
-		if(marks<=100 && marks>=0){
-			return true;
-		}
-		else{
-			throw new Exception("Excetion!");
-			return false;
-		}
-	}
-	
-	Student(String name,int e1,int e2,int e3)throws Exception{
-		this.name=name;
-		
-		if(validateMarks(e1)&&validateMarks(e2)&&validateMarks(e3)){
-			exam1=e1;
-			exam2=e2;
-			exam3=e3;
-			
-		}
-		else{
-			System.out.println("Setting the marks value to 0");
-			throw new Exception("Invalid Marks");
-		}
-	}
-	
-	
-	
-	String getName(){
-		return name;
-	}
-	int getExam1(){
-		return exam1;
-	}
-	int getExam2(){
-		return exam2;
-	}
-	int getExam3(){
-		return exam3;
-	}
-	
-}	
-	
-class StudentDemo{
-	public static void main(String[] args){
-		Student s1,s2;
-		
-		try{
-		s1=new Student("Adam",99,102,-55);
-		s2=new Student("Eve",99,88,75);
-		
-		System.out.println("Name of the Student 1 is "+s1.getName());
-		System.out.println("Marks of the Student 1 for exam 1 is "+s1.getExam1());
-		System.out.println("Marks of the Student 1 for exam 2 is "+s1.getExam2());
-		
-		System.out.println("Name of the Student 2 is "+s2.getName());
-		System.out.println("Marks of the Student 2for exam 1 is "+s2.getExam1());
-		}
-		catch(Exception e){
-			System.out.println("Exception is: "+e.getMessage());
-		}
-		
-	}
+class Student {
+    private String name;
+    private int exam1;
+    private int exam2;
+    private int exam3;
+
+    public Student(String name, int exam1, int exam2, int exam3) {
+        if (exam1 < 0 || exam1 > 100 || exam2 < 0 || exam2 > 100 || exam3 < 0 || exam3 > 100) {
+            throw new IllegalArgumentException("Exam scores must be between 0 and 100");
+        }
+        this.name = name;
+        this.exam1 = exam1;
+        this.exam2 = exam2;
+        this.exam3 = exam3;
+    }
+
+    public String getName() { return name; }
+    public int getExam1() { return exam1; }
+    public int getExam2() { return exam2; }
+    public int getExam3() { return exam3; }
+
+    public double calculateAverage() {
+        return (exam1 + exam2 + exam3) / 3.0;
+    }
 }
+
+public class Main {
+    public static void main(String[] args) {
+        try {
+            Student student = new Student("John", 75, 110, 90);
+            System.out.printf("%s's average: %.2f\n", student.getName(), student.calculateAverage());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error creating student: " + e.getMessage());
+        }
+    }
+}
+
